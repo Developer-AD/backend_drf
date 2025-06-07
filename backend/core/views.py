@@ -1,15 +1,14 @@
 from .models import Account
 from .serializers import AccountSerializer
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
-@api_view(['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
-def account_view(request, pk=None):
-    if request.method == 'GET':
+class AccountView(APIView):
+    def get(self, request, pk=None, format=None):
         if pk is not None:
             account = get_object_or_404(Account, id=pk)
             serializer = AccountSerializer(account)
@@ -19,17 +18,16 @@ def account_view(request, pk=None):
         serializer = AccountSerializer(accounts, many=True)
         return Response(serializer.data)
 
-    if request.method == 'POST':
-        if pk is None:
-            serializer = AccountSerializer(data = request.data)
-            if serializer.is_valid():
-                serializer.save()
-                res = {"success":True, "message":"Account added successfully."}
-                return Response(res, status=status.HTTP_201_CREATED)
+    def post(self, request, format=None):
+        serializer = AccountSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            res = {"success":True, "message":"Account added successfully."}
+            return Response(res, status=status.HTTP_201_CREATED)
 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.method == 'PATCH':
+    def patch(self, request, pk=None, format=None):
         if pk is not None:
             account = get_object_or_404(Account, id=pk)
             serializer = AccountSerializer(account, data = request.data, partial=True)
@@ -39,7 +37,7 @@ def account_view(request, pk=None):
                 return Response(res)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.method == 'PUT':
+    def put(self, request, pk=None, format=None):
         if pk is not None:
             account = get_object_or_404(Account, id=pk)
             serializer = AccountSerializer(account, data = request.data)
@@ -49,7 +47,7 @@ def account_view(request, pk=None):
                 return Response(res)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.method == 'DELETE':
+    def delete(self, request, pk=None, format=None):
         if pk is not None:
             account = get_object_or_404(Account, id=pk)
             account.delete()
