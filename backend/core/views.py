@@ -7,6 +7,6 @@ from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
-class AccountViewsets(viewsets.ModelViewSet):
+class AccountReadOnlyModelViewsets(viewsets.ReadOnlyModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
