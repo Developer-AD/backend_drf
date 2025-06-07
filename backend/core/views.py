@@ -5,12 +5,14 @@ from .serializers import AccountSerializer
 import io
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views import View
 
 
 # Create your views here.
-@csrf_exempt
-def accounts(request, pk=None):
-    if request.method == 'GET':
+@method_decorator(csrf_exempt, name='dispatch')
+class AccountView(View):
+    def get(self, request, pk=None, *args, **kwargs):
         if pk is not None:
             account = Account.objects.get(id=pk)
             serializer = AccountSerializer(account)
@@ -22,7 +24,7 @@ def accounts(request, pk=None):
         python_data = serializer.data
         return JsonResponse(python_data, safe=False)
 
-    if request.method == 'POST':
+    def post(self, request, pk=None, *args, **kwargs):
         if pk is None:
             json_data = request.body
             stream = io.BytesIO(json_data)
@@ -34,7 +36,7 @@ def accounts(request, pk=None):
                 return JsonResponse(res)
             return JsonResponse(serializer.errors)
 
-    if request.method == 'PATCH':
+    def patch(self, request, pk=None, *args, **kwargs):
         if pk is not None:
             account = Account.objects.get(id=pk)
             json_data = request.body
@@ -47,7 +49,7 @@ def accounts(request, pk=None):
                 return JsonResponse(res)
             return JsonResponse(serializer.errors)
 
-    if request.method == 'PUT':
+    def put(self, request, pk=None, *args, **kwargs):
         if pk is not None:
             account = Account.objects.get(id=pk)
             json_data = request.body
@@ -60,31 +62,9 @@ def accounts(request, pk=None):
                 return JsonResponse(res)
             return JsonResponse(serializer.errors)
 
-
-    if request.method == 'DELETE':
+    def delete(self, request, pk=None, *args, **kwargs):
         if pk is not None:
             account = Account.objects.get(id=pk)
             account.delete()
             res = {"success":True, "message":"Account deleted successfully."}
             return JsonResponse(res)
-
-
-# def account_list(request):
-#     accounts = Account.objects.all()
-#     serializer = AccountSerializer(accounts, many=True)
-#     python_data = serializer.data
-#     return JsonResponse(python_data, safe=False)
-
-# @csrf_exempt
-# def account_create(request):
-#     if request.method == 'POST':
-#         json_data = request.body
-#         stream = io.BytesIO(json_data)
-#         python_data = JSONParser().parse(stream)
-#         serializer = AccountSerializer(data=python_data)
-
-#         if serializer.is_valid():
-#             serializer.save()
-#             res = {"success":True, "message":"Data Created"}
-#             return JsonResponse(res)
-#         return JsonResponse(serializer.errors)
