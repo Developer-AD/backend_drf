@@ -1,70 +1,68 @@
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
 from .models import Account
 from .serializers import AccountSerializer
-import io
-from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from django.views import View
-
-
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 # Create your views here.
-@method_decorator(csrf_exempt, name='dispatch')
-class AccountView(View):
-    def get(self, request, pk=None, *args, **kwargs):
+
+
+""" api_view : Provides Browable API for testing. """
+
+# @csrf_exempt
+@api_view(['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
+def account_view(request, pk=None):
+    if request.method == 'GET':
         if pk is not None:
-            account = Account.objects.get(id=pk)
+            # account = Account.objects.get(id=pk) # With no id Raised error 
+            account = get_object_or_404(Account, id=pk) # with no id Raise error details 404-Not Found
             serializer = AccountSerializer(account)
-            python_data = serializer.data
-            return JsonResponse(python_data)
+            return Response(serializer.data)
         
         accounts = Account.objects.all()
         serializer = AccountSerializer(accounts, many=True)
-        python_data = serializer.data
-        return JsonResponse(python_data, safe=False)
+        return Response(serializer.data)
 
-    def post(self, request, pk=None, *args, **kwargs):
+    if request.method == 'POST':
         if pk is None:
-            json_data = request.body
-            stream = io.BytesIO(json_data)
-            python_data = JSONParser().parse(stream)
-            serializer = AccountSerializer(data = python_data)
+            # json_data = request.body # it will return - type : <class 'bytes'>
+            python_data = request.data # it will return - type : <class 'dict'>
+
+            serializer = AccountSerializer(data = request.data)
             if serializer.is_valid():
                 serializer.save()
                 res = {"success":True, "message":"Account added successfully."}
-                return JsonResponse(res)
-            return JsonResponse(serializer.errors)
+                return Response(res, status=status.HTTP_201_CREATED)
 
-    def patch(self, request, pk=None, *args, **kwargs):
+            return Response(serializer.errors)
+
+    if request.method == 'PATCH':
         if pk is not None:
-            account = Account.objects.get(id=pk)
-            json_data = request.body
-            stream = io.BytesIO(json_data)
-            python_data = JSONParser().parse(stream)
-            serializer = AccountSerializer(account, data = python_data, partial=True)
+            account = get_object_or_404(Account, id=pk)
+            serializer = AccountSerializer(account, data = request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
                 res = {"success":True, "message":"Account partially updated successfully."}
-                return JsonResponse(res)
-            return JsonResponse(serializer.errors)
+                return Response(res)
+            return Response(serializer.errors)
 
-    def put(self, request, pk=None, *args, **kwargs):
+    if request.method == 'PUT':
         if pk is not None:
-            account = Account.objects.get(id=pk)
-            json_data = request.body
-            stream = io.BytesIO(json_data)
-            python_data = JSONParser().parse(stream)
-            serializer = AccountSerializer(account, data = python_data)
+            account = get_object_or_404(Account, id=pk)
+            serializer = AccountSerializer(account, data = request.data)
             if serializer.is_valid():
                 serializer.save()
                 res = {"success":True, "message":"Account fully updated successfully."}
-                return JsonResponse(res)
-            return JsonResponse(serializer.errors)
+                return Response(res)
+            return Response(serializer.errors)
 
-    def delete(self, request, pk=None, *args, **kwargs):
+    if request.method == 'DELETE':
         if pk is not None:
-            account = Account.objects.get(id=pk)
+            account = get_object_or_404(Account, id=pk)
             account.delete()
             res = {"success":True, "message":"Account deleted successfully."}
-            return JsonResponse(res)
+            return Response(res)
+        
+    return Response(status=status.HTTP_204_NO_CONTENT)
