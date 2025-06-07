@@ -11,3 +11,4 @@ class AccountSerializer(serializers.Serializer):
     bank = serializers.ChoiceField(choices=Account.BANK_CHOICES, default='Other')
     account_number = serializers.CharField(max_length=20)
     balance = serializers.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+    created_at = serializers.DateTimeField(read_only=True)
