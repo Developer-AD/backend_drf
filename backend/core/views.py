@@ -1,23 +1,17 @@
 from .models import Account
 from .serializers import AccountSerializer
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+
+
 # Create your views here.
-
-
-""" api_view : Provides Browable API for testing. """
-
-# @csrf_exempt
 @api_view(['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
 def account_view(request, pk=None):
     if request.method == 'GET':
         if pk is not None:
-            # account = Account.objects.get(id=pk) # With no id Raised error 
-            account = get_object_or_404(Account, id=pk) # with no id Raise error details 404-Not Found
+            account = get_object_or_404(Account, id=pk)
             serializer = AccountSerializer(account)
             return Response(serializer.data)
         
@@ -27,16 +21,13 @@ def account_view(request, pk=None):
 
     if request.method == 'POST':
         if pk is None:
-            # json_data = request.body # it will return - type : <class 'bytes'>
-            python_data = request.data # it will return - type : <class 'dict'>
-
             serializer = AccountSerializer(data = request.data)
             if serializer.is_valid():
                 serializer.save()
                 res = {"success":True, "message":"Account added successfully."}
                 return Response(res, status=status.HTTP_201_CREATED)
 
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'PATCH':
         if pk is not None:
@@ -46,7 +37,7 @@ def account_view(request, pk=None):
                 serializer.save()
                 res = {"success":True, "message":"Account partially updated successfully."}
                 return Response(res)
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'PUT':
         if pk is not None:
@@ -56,7 +47,7 @@ def account_view(request, pk=None):
                 serializer.save()
                 res = {"success":True, "message":"Account fully updated successfully."}
                 return Response(res)
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'DELETE':
         if pk is not None:
@@ -64,5 +55,3 @@ def account_view(request, pk=None):
             account.delete()
             res = {"success":True, "message":"Account deleted successfully."}
             return Response(res)
-        
-    return Response(status=status.HTTP_204_NO_CONTENT)
