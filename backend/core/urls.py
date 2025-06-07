@@ -1,10 +1,7 @@
 """Django URL Configuration"""
-
-from django.contrib import admin
-from django.urls import path
 from core import views
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    path('accounts', views.AccountView.as_view()),
-    path('accounts/<int:pk>', views.AccountView.as_view()),
-]
+router = DefaultRouter()
+router.register(r'accounts', views.AccountViewsets, basename='account')
+urlpatterns = router.urls
