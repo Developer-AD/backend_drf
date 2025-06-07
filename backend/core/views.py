@@ -13,12 +13,18 @@ def account_list(request):
     serializer = AccountSerializer(accounts, many=True)
     print('-'*100)
     python_data = serializer.data
-    json_data = JSONRenderer().render(python_data)
-
     print(f"Python data : {python_data}")
-    print(f"JSON data : {json_data}")
     print('-'*100)
-    return HttpResponse(json_data, 'application/json')
+
+    # with JsonResponse we can skip this two lines.
+    # json_data = JSONRenderer().render(python_data)
+    # return HttpResponse(json_data, 'application/json')
+
+    # # safe=True [default] it will only send dict data type.
+    # # safe=False we have to change this for sending other types like list of dict.
+    # return JsonResponse(python_data)
+    
+    return JsonResponse(python_data, safe=False)
 
 
 def account_view(request, pk):
@@ -26,10 +32,10 @@ def account_view(request, pk):
     serializer = AccountSerializer(account)
     print('-'*100)
     python_data = serializer.data
-    json_data = JSONRenderer().render(python_data)
-
     print(f"Python data : {python_data}")
-    print(f"JSON data : {json_data}")
     print('-'*100)
-    # return HttpResponse(json_data) # This is send json data as text. 
-    return HttpResponse(json_data, 'application/json') # Send data in json format.
+
+    # with JsonResponse we can skip this two lines.
+    # json_data = JSONRenderer().render(python_data)
+    # return HttpResponse(json_data, 'application/json')
+    return JsonResponse(python_data)
