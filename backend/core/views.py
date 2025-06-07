@@ -61,6 +61,14 @@ def accounts(request, pk=None):
             return JsonResponse(serializer.errors)
 
 
+    if request.method == 'DELETE':
+        if pk is not None:
+            account = Account.objects.get(id=pk)
+            account.delete()
+            res = {"success":True, "message":"Account deleted successfully."}
+            return JsonResponse(res)
+
+
 # def account_list(request):
 #     accounts = Account.objects.all()
 #     serializer = AccountSerializer(accounts, many=True)
