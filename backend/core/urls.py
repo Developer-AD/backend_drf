@@ -7,4 +7,5 @@ from core import views
 urlpatterns = [
     path('accounts/', views.account_list),
     path('accounts/<int:pk>', views.account_view),
+    path('accounts/create', views.account_create),
 ]
