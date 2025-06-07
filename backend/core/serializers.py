@@ -14,5 +14,5 @@ class AccountSerializer(serializers.Serializer):
 
 
     # Deserialization
-    def create(self, validate_data):
-        return Account.objects.create(**validate_data)
+    def create(self, validated_data):
+        return Account.objects.create(**validated_data)
