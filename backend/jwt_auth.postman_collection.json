@@ -1,0 +1,309 @@
+{
+	"info": {
+		"_postman_id": "8bd722ca-2281-4378-bad2-91491478b44f",
+		"name": "Incredible FinTrack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33213517"
+	},
+	"item": [
+		{
+			"name": "Account List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "abhishek",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Advanced Operating System\",\r\n  \"author\": \"SK\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/accounts/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"accounts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account View",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5Mzg5Mjc1LCJpYXQiOjE3NDkzODgxNjEsImp0aSI6IjdhNDI3YmE3NzM4YTQ2NTI4ZjQ4ODQ1Y2M4ZDYzNjBjIiwidXNlcl9pZCI6Mn0.y6P5XC5D8MSvpjGFBkAQj1bLe3SWJ2YiRwjy6KKS3O4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Advanced Operating System\",\r\n  \"author\": \"SK\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/accounts/26",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"26"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Add",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"Saving Account\",\r\n\"bank\": \"SBI\",\r\n\"description\": \"Saving Account\",\r\n\"account_number\": \"12345\",\r\n\"balance\": 10000\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/accounts/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"accounts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Partial Update",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NSaving Account\",\r\n    \"description\": \"New Savings.\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/accounts/25/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"25",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Petty Cash\",\r\n    \"bank\": \"Cash\",\r\n    \"description\": \"General Cash Account.\",\r\n    \"account_number\": \"123456789\",\r\n    \"balance\": 50000\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/accounts/1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Full Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Saving Account\",\r\n    \"description\": \"Savings.\",\r\n    \"bank\": \"SBI\",\r\n    \"account_number\": \"147734\",\r\n    \"balance\": 1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/api/accounts/1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"abhishek\",\r\n  \"password\": \"abhi@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/api/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0OTQ3NDU2MSwiaWF0IjoxNzQ5Mzg4MTYxLCJqdGkiOiJlOWY2ZDUyOWYxZWI0MmZiODFiMGJmMWQ3NTZlODNmMiIsInVzZXJfaWQiOjJ9.WXuBu2nUIHRkc2hrXBp7mKTH_M7fPjl-30NSkuwSvEk\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/token/refresh",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"token",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5Mzg5NjIzLCJpYXQiOjE3NDkzODk1MDMsImp0aSI6IjdmYTZjNmJiYjM1MzQ2MmJiZjZlOTYzZDVkOWU2OWM2IiwidXNlcl9pZCI6Mn0.8tkjFYfdLtfrixEC6Zl_a4kz-djJArXW_E11jhHN-OY\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/token/verify",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"token",
+						"verify"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
