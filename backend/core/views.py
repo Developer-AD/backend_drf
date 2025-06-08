@@ -1,9 +1,9 @@
 from .models import Account
 from .serializers import AccountSerializer
 from rest_framework import viewsets
-from rest_framework.authentication import BasicAuthentication
-# from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+# from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly,DjangoModelPermissions
 # Create your views here.
 
 """
@@ -16,7 +16,7 @@ class AccountViewsets(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
     # permission_classes = [IsAuthenticatedOrReadOnly]
-    # authentication_classes = [SessionAuthentication]
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAdminUser]
+    # authentication_classes = [BasicAuthentication]
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAdminUser, DjangoModelPermissions]
     # permission_classes = [AllowAny] # Same as without login.
