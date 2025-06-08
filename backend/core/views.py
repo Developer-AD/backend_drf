@@ -4,7 +4,7 @@ from rest_framework import viewsets
 # from rest_framework.authentication import BasicAuthentication
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-# Create your views here.
+from .custom_auth import CustomAuth
 
 """
 # from rest_framework.authentication import SessionAuthentication
@@ -12,8 +12,10 @@ from rest_framework.permissions import IsAuthenticated
 # Basic authentication/logout may be not worked.
 """
 
+# Create your views here.
 class AccountViewsets(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    authentication_classes = [TokenAuthentication]
+    # authentication_classes = [TokenAuthentication]
+    authentication_classes = [CustomAuth]
     permission_classes = [IsAuthenticated]
