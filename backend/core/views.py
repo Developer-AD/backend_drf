@@ -18,4 +18,6 @@ class AccountViewsets(viewsets.ModelViewSet):
         return Account.objects.filter(user=self.request.user)
     
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        if serializer.is_valid():
+            serializer.save(user=self.request.user)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
