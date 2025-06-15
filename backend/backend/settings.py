@@ -149,6 +149,12 @@ REST_FRAMEWORK = {
     # 'SEARCH_PARAM':'search' # default.
     # 'SEARCH_PARAM':'q'
     # http://localhost/api/accounts/?q=other
+
+    # ---------------- Pagination -------------------
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 3
+
 }
 
 SIMPLE_JWT = {

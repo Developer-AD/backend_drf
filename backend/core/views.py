@@ -10,6 +10,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 # from .filters import AccountFilter
 
+# ------------- Import custom paginations ------------.
+from .paginations import CustomPageNumPagination
+
 
 # Create your views here.
 class AccountViewsets(viewsets.ModelViewSet):
@@ -73,7 +76,7 @@ class AccountViewsets(viewsets.ModelViewSet):
 
 
     # -------------------- OrderingFilter ----------------
-    filter_backends = [OrderingFilter]
+    # filter_backends = [OrderingFilter]
 
     # Without ordering_fields we can order by all fields.
     # http://localhost/api/accounts/?ordering=id  # Ascending
@@ -81,4 +84,17 @@ class AccountViewsets(viewsets.ModelViewSet):
 
     # http://localhost/api/accounts/?ordering=-id
 
-    ordering_fields = ['id', 'created_at', 'bank']
+    # ordering_fields = ['id', 'created_at', 'bank']
+
+
+    # ============================ Pagination ============================
+    """
+    1. PageNumberPagination
+    2. LimitOffsetPagination
+    3. CursorPagination
+    """
+    # 1. PageNumberPagination
+    # http://localhost/api/accounts/?page=3
+
+    pagination_class = CustomPageNumPagination
+

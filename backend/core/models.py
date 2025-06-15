@@ -62,6 +62,9 @@ class Income(BaseModel):
         max_length=100, choices=SOURCES, default='Other', null=True, blank=True)
     date_received = models.DateField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
         return f"{self.id} - {self.amount} from {self.source}"
 
