@@ -11,7 +11,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 # from .filters import AccountFilter
 
 # ------------- Import custom paginations ------------.
-from .paginations import CustomPageNumPagination
+from .paginations import CustomPageNumPagination, CustomLimitOffset, CustomCursor
 
 
 # Create your views here.
@@ -96,5 +96,23 @@ class AccountViewsets(viewsets.ModelViewSet):
     # 1. PageNumberPagination
     # http://localhost/api/accounts/?page=3
 
-    pagination_class = CustomPageNumPagination
+    # pagination_class = CustomPageNumPagination
+
+    # 2. LimitOffsetPagination
+    # http://localhost/api/accounts/?limit=3&offset=5
+    # pagination_class = CustomLimitOffset
+
+
+    # 3. CustomCursor
+    """
+        Cursor Pagination : - Mostly Blog Post has this pagination.
+        Prev & Next only.
+        field='created' [timestamp] it expect you have this field in the model else get error.
+
+
+    """
+    pagination_class = CustomCursor
+
+
+
 
