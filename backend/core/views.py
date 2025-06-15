@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 # from .filters import AccountFilter
 
 
@@ -51,7 +51,7 @@ class AccountViewsets(viewsets.ModelViewSet):
     # http://localhost/api/accounts/?user=3
 
     # -------------------- SearchFilter ----------------
-    filter_backends = [SearchFilter]
+    # filter_backends = [SearchFilter]
     # search_fields = ['name'] # single field search
     # search_fields = ['name', 'bank', 'account_number'] # MultiField search.
 
@@ -64,10 +64,21 @@ class AccountViewsets(viewsets.ModelViewSet):
     # None	            icontains
 
     # search_fields = ['name'] # Default icontains.
-    search_fields = ['name', '=bank']
+    # search_fields = ['name', '=bank']
 
     # ------- Change search -- q
     # 'SEARCH_PARAM':'search' # default.
     # 'SEARCH_PARAM':'q' # Add in settings.
     # http://localhost/api/accounts/?q=other
 
+
+    # -------------------- OrderingFilter ----------------
+    filter_backends = [OrderingFilter]
+
+    # Without ordering_fields we can order by all fields.
+    # http://localhost/api/accounts/?ordering=id  # Ascending
+    # http://localhost/api/accounts/?ordering=-id # Descending
+
+    # http://localhost/api/accounts/?ordering=-id
+
+    ordering_fields = ['id', 'created_at', 'bank']
