@@ -43,4 +43,4 @@ admin.site.register(CreditCard)
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'bank', 'balance', 'created_at')
+    list_display = ('id', 'user', 'name', 'bank', 'balance', 'created_at')
