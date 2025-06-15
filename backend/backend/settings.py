@@ -138,7 +138,7 @@ AUTH_USER_MODEL = 'accounts.MyUser'
 
 # Globaly applied to all class in the views, but it can be override in views class.
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication'),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication'),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 
     # remove browable api.
