@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 # from .filters import AccountFilter
 
 
@@ -44,7 +45,29 @@ class AccountViewsets(viewsets.ModelViewSet):
 
     # -------------------- Equally based filter ----------------
     # filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['bank', 'user']
+    # filterset_fields = ['bank', 'user', 'name']
 
     # http://localhost/api/accounts/?bank=HDFC
     # http://localhost/api/accounts/?user=3
+
+    # -------------------- SearchFilter ----------------
+    filter_backends = [SearchFilter]
+    # search_fields = ['name'] # single field search
+    # search_fields = ['name', 'bank', 'account_number'] # MultiField search.
+
+    # http://localhost/api/accounts/?search=testing  # filter based on icontains
+    # Prefix	        Lookup	
+    # ^	istartswith	    Starts-with search.
+    # =	iexact	        Exact matches.
+    # $	iregex	        Regex search.
+    # @	search	        Full-text search (Currently only supported Django's PostgreSQL backend).
+    # None	            icontains
+
+    # search_fields = ['name'] # Default icontains.
+    search_fields = ['name', '=bank']
+
+    # ------- Change search -- q
+    # 'SEARCH_PARAM':'search' # default.
+    # 'SEARCH_PARAM':'q' # Add in settings.
+    # http://localhost/api/accounts/?q=other
+

@@ -139,12 +139,16 @@ AUTH_USER_MODEL = 'accounts.MyUser'
 # Globaly applied to all class in the views, but it can be override in views class.
 REST_FRAMEWORK = {
     # 'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication'),
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 
     # remove browable api.
     # 'DEFAULT_RENDERER_CLASSES': [
     #     'rest_framework.renderers.JSONRenderer',
     # ],
+
+    # 'SEARCH_PARAM':'search' # default.
+    # 'SEARCH_PARAM':'q'
+    # http://localhost/api/accounts/?q=other
 }
 
 SIMPLE_JWT = {
