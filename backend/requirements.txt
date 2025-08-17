@@ -2,3 +2,6 @@ django
 djangorestframework
 django-filter
 djangorestframework-simplejwt
+django-channels
+django-cors-headers
+pillow

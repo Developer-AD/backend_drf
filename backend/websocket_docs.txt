@@ -1,0 +1,2 @@
+python -c "import daphne; print(daphne.__version__)"
+python -c "import importlib.metadata; print(importlib.metadata.version('channels'))"
