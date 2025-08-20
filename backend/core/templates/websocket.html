@@ -26,7 +26,8 @@
 
         ws.onopen = function () {
             console.log('==>Connection open.');
-            ws.send('Hello From Client.')
+            const message = JSON.stringify({ 'message': 'Message from client.' })
+            ws.send(message)
         }
 
         ws.onmessage = function (event) {

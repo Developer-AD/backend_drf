@@ -18,6 +18,8 @@ class MySyncConsumer(SyncConsumer):
         print('-'*100)
         print('WEBSOCKET - CONNECT')
         print(f"Event - Data : {event}")
+        python_data = json.loads(event.get('text'))
+        print(f"Python data - {python_data}")
         print('-'*100)
 
         
