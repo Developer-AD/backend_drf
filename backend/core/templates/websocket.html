@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebScoket</title>
+</head>
+
+<body>
+    <center>
+        <h1>Welcome to Web-socket Demonstration.</h1>
+        <button onclick="firstEvent()">Event - 1</button>
+        <button onclick="secondEvent()">Event - 2</button>
+        <br>
+        <h2>Event - 1 : <span id="event-1"></span></h2>
+        <br>
+        <h2>Event - 2 : <span id="event-2"></span></h2>
+    </center>
+</body>
+
+<script>
+    function firstEvent() {
+        // var ws = new WebSocket('ws://localhost/ws/ac/')
+        var ws = new WebSocket('ws://localhost/ws/sc/')
+
+        ws.onopen = function () {
+            console.log('==>Connection open.');
+            ws.send('Hello From Client.')
+        }
+
+        ws.onmessage = function (event) {
+            console.log('==>Message from Server :- ', event.data);
+            const data = JSON.parse(event.data)
+            document.getElementById("event-1").innerText = data.count;
+        }
+
+        ws.onerror = function (event) {
+            console.log("==> Error", event)
+        }
+
+        ws.onclose = function (event) {
+            console.log("==> On Close", event)
+        }
+    }
+    function secondEvent() {
+        var ws = new WebSocket('ws://localhost/ws/ac/')
+
+        ws.onopen = function () {
+            console.log('==>Connection open.');
+            ws.send('Hello From Client.')
+        }
+
+        ws.onmessage = function (event) {
+            console.log('==>Message from Server :- ', event.data);
+            document.getElementById("event-2").innerText = event.data;
+        }
+
+        ws.onerror = function (event) {
+            console.log("==> Error", event)
+        }
+
+        ws.onclose = function (event) {
+            console.log("==> On Close", event)
+        }
+    }
+
+</script>
+
+</html>

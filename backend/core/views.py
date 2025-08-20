@@ -10,6 +10,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 # from .filters import AccountFilter
 
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+
 # ------------- Import custom paginations ------------.
 from .paginations import CustomPageNumPagination, CustomLimitOffset, CustomCursor
 
@@ -114,5 +117,5 @@ class AccountViewsets(viewsets.ModelViewSet):
     pagination_class = CustomCursor
 
 
-
-
+def websocket(request):
+    return render(request, 'websocket.html')
